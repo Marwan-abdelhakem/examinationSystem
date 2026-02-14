@@ -2,6 +2,10 @@ import mongoose, { Schema } from "mongoose";
 
 const UserSchema = new Schema(
     {
+        role: {
+            type: String,
+            enum: ['user', 'admin']
+        },
         firstName: {
             type: String,
             required: [true, "First Name is required"],

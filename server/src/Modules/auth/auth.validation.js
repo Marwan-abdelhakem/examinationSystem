@@ -1,6 +1,10 @@
 import joi from "joi"
 
 export const signUpValidation = joi.object({
+    role: joi.string().valid('user', 'admin').required().messages({
+        "any.only": "role must be admin or user",
+        "any.required": "role is required"
+    }),
     firstName: joi.string().min(3).max(20).required(),
     lastName: joi.string().min(3).max(20).required(),
     password: joi.string()

@@ -1,13 +1,18 @@
 import connectDb from "./DB/connectDB.js"
 import globalErrorHandler from "./Utlis/errorHandler.utlis.js"
 import authRouter from "./Modules/auth/auth.controller.js"
+import quizRouter from "./Modules/Admin/question.controller.js"
+import cors from 'cors';
 
 const bootStrap = async (app, express) => {
+    app.use(cors());
+
     app.use(express.json())
     await connectDb()
 
 
     app.use("/api/auth", authRouter)
+    app.use("/api/quiz", quizRouter)
 
     app.all("/*dummy", (req, res, next) => {
         return next(new Error("Not found Handler !!!!", { cause: 409 }))

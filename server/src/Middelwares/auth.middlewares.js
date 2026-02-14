@@ -1,6 +1,6 @@
 import { verifyTokin } from "../Utlis/token.utlis.js"
-// import * as dbService from "../DB/dbService.js"
-// import UserModel from "../DB/model/user.model.js"
+import * as dbService from "../DB/dbServices.js"
+import UserModel from "../DB/models/user.model.js"
 
 export const authentication = async (req, res, next) => {
     const { authorization } = req.headers
