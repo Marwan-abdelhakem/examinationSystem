@@ -1,14 +1,37 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" dir="ltr">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>examination system</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
+    <div class="container">
+        <header>
+            <h1>Create Quiz</h1>
+        </header>
 
+        <main class="main-content">
+            <section class="form-section">
+                <div class="input-group">
+                    <label>Quiz name:</label>
+                    <input type="text" id="quizName" placeholder="">
+                </div>
+
+                <div id="questionsContainer">
+                </div>
+
+                <div class="actions">
+                    <button type="button" class="btn-add" onclick="addQuestionUI()">add questions +</button>
+                    <button type="button" class="btn-submit" onclick="submitQuiz()">End</button>
+                </div>
+            </section>
+        </main>
+    </div>
+    <script src="script.js"></script>
 </body>
 
 </html>
