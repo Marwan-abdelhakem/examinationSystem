@@ -14,9 +14,9 @@ const bootStrap = async (app, express) => {
     app.use("/api/auth", authRouter)
     app.use("/api/quiz", quizRouter)
 
-    app.all("/*dummy", (req, res, next) => {
-        return next(new Error("Not found Handler !!!!", { cause: 409 }))
-    })
+    // app.all("/*dummy", (req, res, next) => {
+    //     return next(new Error("Not found Handler !!!!", { cause: 409 }))
+    // })
 
     app.use(globalErrorHandler)
 }
