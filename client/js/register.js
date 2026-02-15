@@ -2,7 +2,9 @@ const registerForm = document.getElementById("registerForm");
 const errorDiv = document.querySelector(".error");
 
 function showError(message, fields = []) {
+  const errorDiv = document.querySelector(".error"); // to display error
   errorDiv.textContent = message;
+  errorDiv.style.display = "block";  //  
 
   fields.forEach(field => {
     field.classList.add("input-error");

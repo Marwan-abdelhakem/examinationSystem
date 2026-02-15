@@ -15,6 +15,7 @@ body {
   background-color: #ffffff;
   padding: 30px;
   border-radius: 8px;
+  box-shadow: 0 10px 25px #0000001a;
 }
 .auth-container h2 {
   text-align: center;
@@ -33,6 +34,10 @@ body {
   border-radius: 8px;
   font-size: 14px;
 }
+.inp:focus {
+  outline: none;
+  border-color: #771818;
+}
 .sub-sign {
   padding: 12px;
   border-radius: 8px;
@@ -41,9 +46,15 @@ body {
   color: #fff;
   cursor: pointer;
   font-weight: bold;
+  transition: 0.3s;
+}
+.sub-sign:hover {
+  background-color: #5c1212;
+  transform: translateY(-2px);
 }
 /* still need an edit */
 .error {
+  display: none;
   color: #d8000c;
   background-color: #ffd2d2;
   padding: 8px;
