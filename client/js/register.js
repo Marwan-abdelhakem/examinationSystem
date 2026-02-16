@@ -50,7 +50,7 @@ registerForm.addEventListener("submit", async (e) => {
     }
 
     // alert("Registered successfully!");
-    window.location.href = "" //go to home page
+    window.location.href = "login.html" //go to home page
 
     registerForm.reset();
 
