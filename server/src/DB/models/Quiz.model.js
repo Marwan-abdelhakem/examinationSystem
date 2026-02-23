@@ -8,7 +8,13 @@ const QuizSchema = new Schema({
         lowercase: true,
         trim: true
     },
-    totalQuestions: { type: Number, default: 0 }
+    totalQuestions: { type: Number, default: 0 },
+    durationInMinutes: {
+        type: Number,
+        required: [true, "مدة الامتحان مطلوبة"],
+        min: [1, "أقل وقت للامتحان هو دقيقة واحدة"]
+    }
+
 }, { timestamps: true });
 
 

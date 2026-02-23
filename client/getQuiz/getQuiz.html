@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz</title>
+    <link rel="stylesheet" href="./getQuiz.css">
+</head>
+
+<body>
+
+    <div class="container">
+
+        <section id="selection-screen" class="card">
+            <h1>Welcome to the examination system.</h1>
+            <p>Please enter the exam name to start the test.</p>
+
+            <div class="input-group">
+                <input type="text" id="quizInput" placeholder="ex: javascript or math">
+                <button class="btn-start" onclick="startExam(document.getElementById('quizInput').value)">
+                    Start the exam now. </button>
+            </div>
+        </section>
+
+        <section id="exam-screen" class="card" style="display: none;">
+            <div class="exam-header">
+                <h2 id="displayQuizName">Quiz name </h2>
+                <div id="timer-display" class="timer">00:00</div>
+            </div>
+
+            <div class="progress-bar-container">
+                <div id="progress-fill" class="progress-fill"></div>
+            </div>
+
+            <div id="question-box" class="question-container">
+            </div>
+
+            <div class="exam-footer">
+                <button id="prev-btn" class="btn-nav" onclick="prevQuestion()" disabled>back</button>
+                <span id="counter">question 0 from 0</span>
+                <button id="next-btn" class="btn-nav" onclick="nextQuestion()">next</button>
+                <button id="submit-btn" class="btn-submit" onclick="finishExam()" style="display: none;">Finish and
+                    submit.</button>
+            </div>
+        </section>
+
+    </div>
+
+    <script src="./getQuiz.js"></script>
+</body>
+
+</html>
