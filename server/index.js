@@ -1,10 +1,11 @@
 import express from 'express'
 import bootStrap from "./src/app.controller.js"
 
+import dotenv from "dotenv";
 
-
+dotenv.config();
 const app = express()
-const port = 3000
+const port = process.env.PORT || 3000
 
 await bootStrap(app, express)
 

@@ -38,12 +38,23 @@ export const registerUser = async (req, res) => {
       email,
       password,
     });
+    const token = signToken({
+      payload: {
+        _id: user._id,
+        role: user.role
+      }
+    });
 
     res.status(201).json({
-      _id: user._id,
-      name: user.name,
-      email: user.email,
-      role: user.role,
+      message: "User registered successfully",
+      token,
+      user: {
+        _id: user._id,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        email: user.email,
+        role: user.role
+      }
     });
 
   } catch (error) {

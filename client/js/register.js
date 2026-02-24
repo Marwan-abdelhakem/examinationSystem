@@ -58,3 +58,20 @@ registerForm.addEventListener("submit", async (e) => {
     showError("Server error. Please try again later.");
   }
 });
+function hideError() {
+  const errorDiv = document.querySelector(".error");
+  errorDiv.textContent = "";
+  errorDiv.style.display = "none";
+
+  const inputs = document.querySelectorAll(".inp");
+  inputs.forEach(input => {
+    input.classList.remove("input-error");
+  });
+}
+const inputs = document.querySelectorAll(".inp");
+
+inputs.forEach(input => {
+  input.addEventListener("input", () => {
+    hideError();
+  });
+});
