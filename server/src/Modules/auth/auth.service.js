@@ -2,19 +2,64 @@ import successResponse from "../../Utlis/successRespone.utlis.js"
 import UserModel from "../../DB/models/user.model.js"
 import * as dbService from "../../DB/dbServices.js"
 import { signToken } from "../../Utlis/token.utlis.js"
+import bcrypt from "bcrypt";
 
-export const signUP = async (req, res, next) => {
-    const { firstName, lastName, password, email } = req.body
-    const user = await dbService.findOne({ model: UserModel, filter: { email } })
-    if (user) {
-        return next(new Error("Email already exists", { cause: 409 }))
-    }
-    const createUser = await dbService.create({ model: UserModel, data: [{ firstName, lastName, password, email }] })
-    return successResponse({ res, statusCode: 201, message: "User Create Successfully", data: createUser })
-}
+// export const signUP = async (req, res, next) => {
+//     const { firstName, lastName, password, email } = req.body
+//     const user = await dbService.findOne({ model: UserModel, filter: { email } })
+//     if (user) {
+//         return next(new Error("Email already exists", { cause: 409 }))
+//     }
+//     const createUser = await dbService.create({ model: UserModel, data: [{ firstName, lastName, password, email }] })
+//     return successResponse({ res, statusCode: 201, message: "User Create Successfully", data: createUser })
+// }
 
 // register
 // @route 
+// login
+// @route POST /auth/login
+export const login = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+
+    // check email
+    const user = await UserModel.findOne({ email });
+    if (!user) {
+      return res.status(400).json({ message: "Invalid email or password" });
+    }
+
+    // check password
+    const isMatch = await bcrypt.compare(password, user.password);
+
+    if (!isMatch) {
+      return res.status(400).json({ message: "Invalid email or password" });
+    }
+
+    // generate token
+    const token = signToken({
+      payload: {
+        _id: user._id,
+        role: user.role
+      }
+    });
+
+    res.status(200).json({
+      message: "Login successful",
+      token,
+      user: {
+        _id: user._id,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        email: user.email,
+        role: user.role
+      }
+    });
+
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
 export const registerUser = async (req, res) => {
   try {
     const { firstName, lastName, email, password} = req.body;

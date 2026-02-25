@@ -4,6 +4,7 @@
   box-sizing: border-box;
 }
 body {
+  font-family: Arial, Helvetica, sans-serif;
   min-height: 100vh;
   display: flex;
   justify-content: center;
@@ -28,6 +29,13 @@ body {
   /* justify-content: center; */
   gap: 0.5rem;
 }
+#loginForm {
+  display: flex;
+  flex-direction: column;
+  /* justify-content: center; */
+  gap: 0.7rem;
+}
+
 .inp {
   border: 1px solid #ccc;
   padding: 12px;
@@ -38,7 +46,7 @@ body {
   outline: none;
   border-color: #771818;
 }
-.sub-sign {
+.sub-sign { 
   padding: 12px;
   border-radius: 8px;
   border: none;
@@ -63,4 +71,20 @@ body {
 }
 .input-error {
   border: 2px solid red;
+}
+.switch-auth{
+  margin-top: 15px;
+  text-align: center;
+  color: #555;
+  font-size: 14px;
+}
+.switch-auth a{
+  text-decoration: none;
+  color: #771818;
+  font-weight: bold;
+  transition: 0.3s;
+}
+.switch-auth a:hover{
+  text-decoration: underline;
+  color: #5c1212;
 }
