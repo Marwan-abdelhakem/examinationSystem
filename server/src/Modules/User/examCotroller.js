@@ -3,6 +3,28 @@ import QuestionsModel from "../../DB/models/questions.model.js";
 import ExamAttempt from "../../DB/models/examAttempt.js";
 import UserModel from "../../DB/models/user.model.js";
 
+//  end point to get the resilts of exam
+export const getPreviousExams = async (req, res, next) => {
+  try {
+    const userId = req.user._id;
+
+    const user = await UserModel.findById(userId).select("exams");
+
+    if (!user) {
+      return res.status(404).json({
+        message: "User not found",
+      });
+    }
+
+    res.json({
+      message: "Previous exams fetched",
+      data: user.exams,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
 function shuffleArray(array) {
   return array.sort(() => Math.random() - 0.5);
 }
@@ -76,7 +98,7 @@ export const startExam = async (req, res) => {
       attemptNumber,
       questionsOrder,
       endAt,
-      essionActive: true
+      essionActive: true,
     });
 
     res.status(200).json({
@@ -153,87 +175,6 @@ export const saveAnswer = async (req, res) => {
     });
   }
 };
-
-/*
-============================
-SUBMIT EXAM
-============================
-*/
-
-// export const submitExam = async (req, res) => {
-//   try {
-//     // const { attemptId } = req.body;
-//     const attemptId = req.body?.attemptId;
-
-//     if (!attempt) {
-//       return res.status(404).json({
-//         message: "Attempt not found",
-//       });
-//     }
-
-//     const attempt = await ExamAttempt.findById(attemptId)
-//       .populate("answers.questionId")
-//       .populate("quizId");
-
-//     if (attempt.status === "submitted") {
-//       return res.status(400).json({
-//         message: "Exam already submitted",
-//       });
-//     }
-
-//     if (new Date() > new Date(attempt.endAt)) {
-//       attempt.status = "submitted";
-//     }
-
-//     let score = 0;
-
-//     attempt.answers.forEach((ans) => {
-//       if (ans.questionId.correctAnswerIndex === ans.selectedOptionIndex) {
-//         score++;
-//       }
-//     });
-
-//     attempt.score = score;
-//     attempt.status = "submitted";
-
-//     await attempt.save();
-
-//     // await UserModel.findByIdAndUpdate(attempt.userId, {
-//     //   $push: {
-//     //     exams: {
-//     //       examName: attempt.quizId.quizName,
-//     //       score,
-//     //       totalScore: attempt.questionsOrder.length
-//     //     }
-//     //   }
-//     // });
-
-//     await UserModel.findByIdAndUpdate(attempt.userId, {
-//       $push: {
-//         exams: {
-//           examName: attempt.quizId?.quizName || "quiz",
-//           score,
-//           totalScore: attempt.questionsOrder?.length || 0,
-//         },
-//       },
-//     });
-
-//     res.json({
-//       score,
-//       total: attempt.questionsOrder.length,
-//     });
-//   } catch (error) {
-//     // catch (error) {
-//     //   res.status(500).json({
-//     //     message: "Server error",
-//     //   });
-//     // }
-//     console.error(error);
-//     res.status(500).json({
-//       message: error.message,
-//     });
-//   }
-// };
 
 export const submitExam = async (req, res) => {
   try {

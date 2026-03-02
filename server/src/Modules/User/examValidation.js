@@ -1,9 +1,7 @@
 import Joi from "joi";
 import mongoose from "mongoose";
 
-
 // START EXAM VALIDATION
-
 
 export const startExamSchema = Joi.object({
   quizId: Joi.string()
@@ -13,12 +11,10 @@ export const startExamSchema = Joi.object({
         return helpers.error("any.invalid");
       }
       return value;
-    }, "ObjectId validation")
+    }, "ObjectId validation"),
 });
 
-
 // SAVE ANSWER VALIDATION
-
 
 export const saveAnswerSchema = Joi.object({
   attemptId: Joi.string()
@@ -39,14 +35,10 @@ export const saveAnswerSchema = Joi.object({
       return value;
     }),
 
-  selectedOptionIndex: Joi.number()
-    .required()
-    .min(0)
+  selectedOptionIndex: Joi.number().required().min(0),
 });
 
-
 // SUBMIT EXAM VALIDATION
-
 
 export const submitExamSchema = Joi.object({
   attemptId: Joi.string()
@@ -56,5 +48,5 @@ export const submitExamSchema = Joi.object({
         return helpers.error("any.invalid");
       }
       return value;
-    })
+    }),
 });

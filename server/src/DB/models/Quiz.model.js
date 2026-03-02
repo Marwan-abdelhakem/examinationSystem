@@ -9,15 +9,15 @@ const QuizSchema = new Schema(
       lowercase: true,
       trim: true,
     },
-    duration: {
-      type: Number,
-      required: true,
-    },
-
     totalQuestions: { type: Number, default: 0 },
-  },
-  { timestamps: true },
-);
+    duration  : {
+        type: Number,
+        required: [true, "مدة الامتحان مطلوبة"],
+        min: [1, "أقل وقت للامتحان هو دقيقة واحدة"]
+    }
+
+}, { timestamps: true });
+
 
 const QuizModel = mongoose.models.Quiz || mongoose.model("Quiz", QuizSchema);
 

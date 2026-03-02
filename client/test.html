@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Home</title>
+
+<style>
+
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body{
+  font-family: Arial, Helvetica, sans-serif;
+  min-height: 100vh;
+  background-color: #f4f4f4;
+}
+
+/* Navbar */
+
+.navbar{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:18px 50px;
+  background:white;
+  box-shadow:0 2px 15px rgba(0,0,0,0.06);
+}
+
+.navbar h2{
+  color:#771818;
+  font-size:22px;
+}
+
+.username{
+  font-weight:bold;
+  color:#771818;
+  font-size:16px;
+}
+
+/* Container Layout */
+
+.container{
+  padding:40px 60px;
+  display:grid;
+  grid-template-columns: 3fr 1fr;
+  gap:30px;
+}
+
+/* Exams Section */
+
+.exams{
+  background:white;
+  padding:35px;
+  border-radius:18px;
+  box-shadow:0 5px 20px rgba(0,0,0,0.06);
+}
+
+.exams h2{
+  font-size:28px;
+  margin-bottom:25px;
+  color:#333;
+}
+
+/* Exam Cards */
+
+.exam-grid{
+  display:grid;
+  grid-template-columns: repeat(auto-fit,minmax(220px,1fr));
+  gap:20px;
+}
+
+.exam-card{
+  background:#fafbff;
+  padding:20px;
+  border-radius:12px;
+  border:1px solid #eee;
+  transition:0.3s;
+}
+
+.exam-card:hover{
+  transform:translateY(-5px);
+  box-shadow:0 5px 15px rgba(0,0,0,0.08);
+}
+
+.exam-title{
+  font-weight:bold;
+  margin-bottom:10px;
+}
+
+.start-btn{
+  margin-top:15px;
+  width:100%;
+  padding:12px;
+  border:none;
+  border-radius:10px;
+  background:#771818;
+  color:white;
+  cursor:pointer;
+  font-weight:bold;
+  transition:0.3s;
+}
+
+.start-btn:hover{
+  background:#5c1212;
+  transform:translateY(-2px);
+}
+
+/* Sidebar */
+
+.sidebar{
+  background:white;
+  padding:25px;
+  border-radius:15px;
+  box-shadow:0 5px 20px rgba(0,0,0,0.06);
+}
+
+.sidebar h3{
+  margin-bottom:15px;
+  color:#333;
+}
+
+.prev-item{
+  padding:12px;
+  border-bottom:1px solid #eee;
+  font-size:14px;
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- Navbar -->
+<div class="navbar">
+  <h2>Examination System</h2>
+  <div class="username" id="username">
+    Welcome User
+  </div>
+</div>
+
+<!-- Main Container -->
+<div class="container">
+
+<!-- Exams Section -->
+<div class="exams">
+<h2>Available Exams</h2>
+
+<div class="exam-grid">
+
+<div class="exam-card">
+<div class="exam-title">Math Exam</div>
+<div>Duration: 60 min</div>
+<button class="start-btn">Start Exam</button>
+</div>
+
+<div class="exam-card">
+<div class="exam-title">Programming Exam</div>
+<div>Duration: 45 min</div>
+<button class="start-btn">Start Exam</button>
+</div>
+
+<div class="exam-card">
+<div class="exam-title">Database Exam</div>
+<div>Duration: 50 min</div>
+<button class="start-btn">Start Exam</button>
+</div>
+
+</div>
+</div>
+
+<!-- Sidebar -->
+<div class="sidebar">
+<h3>Previous Results</h3>
+
+<div class="prev-item">Math Exam - Score 80%</div>
+<div class="prev-item">Programming Exam - Score 90%</div>
+<div class="prev-item">Database Exam - Score 75%</div>
+
+</div>
+
+</div>
+
+</body>
+</html>

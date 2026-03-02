@@ -1,7 +1,6 @@
 function addQuestionUI() {
     const container = document.getElementById('questionsContainer');
     const qIndex = container.children.length;
-
     const qCard = document.createElement('div');
     qCard.className = 'question-card';
     qCard.innerHTML = `
@@ -25,9 +24,10 @@ function addQuestionUI() {
 
 async function submitQuiz() {
     const quizName = document.getElementById('quizName').value;
+    const quizTimer = document.getElementById('quizTimer').value;
     const cards = document.querySelectorAll('.question-card');
 
-    if (!quizName || cards.length === 0) {
+    if (!quizName || cards.length === 0 || !quizTimer) {
         return alert("must enter name of quiz and enter questions");
     }
 
@@ -45,7 +45,8 @@ async function submitQuiz() {
 
     const finalPayload = {
         quizName: quizName,
-        questionsArray: questionsArray
+        questionsArray: questionsArray,
+        durationInMinutes: quizTimer
     };
     try {
         const response = await fetch('http://localhost:3000/api/quiz/createQuiz', {
@@ -60,7 +61,7 @@ async function submitQuiz() {
             alert("Quiz create success ");
             location.reload();
         } else {
-            alert("fail" + data.message);
+            alert("fail:" + data.message);
         }
     } catch (error) {
         console.error("Fetch Error:", error);

@@ -9,6 +9,8 @@ const router = Router()
 router.post("/createQuiz", qeustionServices.createQuiz)
 
 router.get("/getQuiz/:quizName", qeustionServices.getQuiz)
+router.get("/getallquiz", qeustionServices.getAllQuiz)
+
 
 
 export default router

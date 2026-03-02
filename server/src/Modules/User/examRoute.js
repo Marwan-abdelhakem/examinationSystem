@@ -2,7 +2,8 @@ import express from "express";
 import {
   startExam,
   saveAnswer,
-  submitExam
+  submitExam,
+  getPreviousExams
 } from "./examCotroller.js";
 import {startExamSchema, saveAnswerSchema, submitExamSchema} from "./examValidation.js"
 import { validation } from "../../Middelwares/validation.middelwares.js";
@@ -13,5 +14,6 @@ const router = express.Router();
 router.post("/start/:quizId", authentication,validation(startExamSchema),  startExam);
 router.post("/answer",validation(saveAnswerSchema),  saveAnswer);
 router.post("/submit",validation(submitExamSchema),  submitExam);
+router.get("/previousexams" ,authentication, getPreviousExams )
 
 export default router;
