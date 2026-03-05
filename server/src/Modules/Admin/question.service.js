@@ -2,6 +2,7 @@ import successResponse from "../../Utlis/successRespone.utlis.js"
 import * as dbService from "../../DB/dbServices.js"
 import QuestionsModel from "../../DB/models/questions.model.js"
 import QuizModel from "../../DB/models/Quiz.model.js"
+import UserModel from "../../DB/models/user.model.js"
 
 
 export const createQuiz = async (req, res, next) => {
@@ -38,7 +39,115 @@ export const getQuiz = async (req, res, next) => {
     const questions = await QuestionsModel.find({ quizId: quiz._id });
 
     return res.json({ quiz, questions });
+
+};
+
+export const saveExamResult = async (req, res, next) => {
+    try {
+        const { examName, score } = req.body;
+        const userId = req.user._id; // مأخوذ من الـ authentication middleware
+
+        // تحديث المستخدم مباشرة باستخدام Mongoose
+        const updatedUser = await UserModel.findByIdAndUpdate(
+            userId,
+            {
+                $push: {
+                    exams: {
+                        examName: examName,
+                        score: score,
+                        date: new Date()
+                    }
+                }
+            },
+            { new: true } // ليعيد البيانات بعد التحديث
+        );
+
+        if (!updatedUser) {
+            return next(new Error("User not found or failed to save result", { cause: 404 }));
+        }
+
+        return res.status(200).json({
+            success: true,
+            message: "Exam result saved successfully",
+            data: updatedUser.exams[updatedUser.exams.length - 1] // إرجاع آخر نتيجة أضيفت
+        });
+
+    } catch (error) {
+        return next(new Error(error.message, { cause: 500 }));
+    }
+};
+
+export const getMyGrades = async (req, res, next) => {
+    try {
+        // 1. الوصول للمستخدم عن طريق الـ ID المخزن في req.user (من ميدل وير الـ auth)
+        // بنستخدم .select عشان نجيب مصفوفة الامتحانات فقط ونوفر في مساحة البيانات
+        const user = await UserModel.findById(req.user._id).select("exams");
+
+        if (!user) {
+            return next(new Error("User not found", { cause: 404 }));
+        }
+
+        // 2. إرجاع مصفوفة الدرجات كاملة
+        return res.status(200).json({
+            message: "Success",
+            resultsCount: user.exams.length,
+            grades: user.exams // هذه المصفوفة تحتوي على examName, score, date
+        });
+
+    } catch (error) {
+        return next(new Error(error.message, { cause: 500 }));
+    }
 };
 
 
+export const getAllQuiz = async (req, res, next) => {
+    const quizs = await QuizModel.find().select("quizName -_id");
+    if (!quizs) return next(new Error("not founded quiz", { cause: 409 }))
+    return successResponse({
+        res,
+        statusCode: 200,
+        message: "Quiz fetched successfully",
+        data: {
+            quizs
+        }
+    });
+}
+
+export const getAllUsers = async (req, res, next) => {
+    const users = await UserModel.find()
+    if (!users) {
+        return next(new Error("not founded Users", { cause: 409 }))
+    }
+    return successResponse({
+        res,
+        statusCode: 200,
+        message: "users fetched successfully",
+        data: {
+            users
+        }
+    });
+}
+
+export const getallQuiz = async (req, res, next) => {
+    try {
+        const quizzes = await QuizModel.find().select("quizName duration");
+
+        if (!quizzes.length) {
+            return next(new Error("No quizzes found", { cause: 404 }));
+        }
+
+        return successResponse({
+            res,
+            statusCode: 200,
+            message: "Quiz fetched successfully",
+            data: quizzes,
+        });
+    } catch (error) {
+        next(error);
+    }
+};
+
+// export const updateQuiz = async (req, res, next) => {
+
+// }
 

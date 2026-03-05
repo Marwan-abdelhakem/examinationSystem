@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="./homeAdmin.css">
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="nav-left">
+            <h2>Exam System</h2>
+        </div>
+        <div class="nav-right">
+            <span id="welcome-msg">Welcome, Admin</span>
+            <button onclick="logout()" class="logout-btn">Logout</button>
+        </div>
+    </nav>
+
+    <main class="dashboard-container">
+        <h1>Dashboard Overview</h1>
+        <div class="cards-grid">
+            <div class="card" onclick="navigateTo('create-quiz')">
+                <div class="card-icon">➕</div>
+                <h3>Create New Quiz</h3>
+                <p>Build new exams and add questions.</p>
+            </div>
+
+            <div class="card" onclick="navigateTo('view-quizzes')">
+                <div class="card-icon">📝</div>
+                <h3>Manage Quizzes</h3>
+                <p>View, edit, or delete existing exams.</p>
+            </div>
+
+            <div class="card" onclick="navigateTo('view-users')">
+                <div class="card-icon">👥</div>
+                <h3>Manage Users</h3>
+                <p>Monitor students and their performance.</p>
+            </div>
+        </div>
+    </main>
+
+    <script src="./adminHome.js"></script>
+</body>
+
+</html>

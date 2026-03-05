@@ -102,7 +102,26 @@ function runTimer() {
 }
 
 
-function finishExam() {
+// function finishExam() {
+//     clearInterval(timerInterval);
+//     let score = 0;
+
+//     currentQuestions.forEach((q, index) => {
+//         if (userAnswers[index] === q.correctAnswerIndex) {
+//             score++;
+//         }
+//     });
+
+//     const screen = document.getElementById('exam-screen');
+//     screen.innerHTML = `
+//         <div class="result-box">
+//             <h2>final result</h2>
+//             <p class="score-text">${score} / ${currentQuestions.length}</p>
+//             <button onclick="location.reload()">Home </button>
+//         </div>
+//     `;
+// }
+async function finishExam() {
     clearInterval(timerInterval);
     let score = 0;
 
@@ -111,6 +130,25 @@ function finishExam() {
             score++;
         }
     });
+
+    // --- الجزء الجديد: إرسال النتيجة للسيرفر ---
+    try {
+        await fetch(`http://localhost:3000/api/auth/save-result`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                // المتصفح سيرسل الـ Cookie تلقائياً لأننا فعلنا الـ cookieParser
+            },
+            body: JSON.stringify({
+                examName: document.querySelector('h2').innerText, // أو أي وسيلة لجلب الاسم
+                score: score
+            })
+        });
+        console.log("Result saved to database");
+    } catch (error) {
+        console.error("Error saving result:", error);
+    }
+    // ---------------------------------------
 
     const screen = document.getElementById('exam-screen');
     screen.innerHTML = `

@@ -1,0 +1,122 @@
+:root {
+    --primary-color: #4a90e2;
+    --secondary-color: #f3f4f6;
+    --text-color: #333;
+    --white: #ffffff;
+    --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --accent-color: #2ecc71;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f8f9fa;
+    color: var(--text-color);
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#quiz-header {
+    text-align: center;
+    margin-bottom: 30px;
+    width: 100%;
+    max-width: 800px;
+}
+
+#quiz-title {
+    color: var(--primary-color);
+    font-size: 2.5rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 10px;
+}
+
+#questions-container {
+    width: 100%;
+    max-width: 800px;
+}
+
+.question-card {
+    background: var(--white);
+    border-radius: 12px;
+    padding: 25px;
+    margin-bottom: 20px;
+    box-shadow: var(--shadow);
+    transition: transform 0.2s ease;
+}
+
+.question-card:hover {
+    transform: translateY(-5px);
+}
+
+.question-text {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 20px;
+    display: block;
+    border-left: 5px solid var(--primary-color);
+    padding-left: 15px;
+}
+
+.options-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.option-item {
+    display: flex;
+    align-items: center;
+    padding: 12px 15px;
+    border: 2px solid var(--secondary-color);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.option-item:hover {
+    background-color: #ebf5ff;
+    border-color: var(--primary-color);
+}
+
+.option-item input[type="radio"] {
+    margin-right: 15px;
+    transform: scale(1.2);
+    cursor: pointer;
+}
+
+/* زر الإرسال في نهاية الصفحة */
+.submit-quiz-btn {
+    background-color: var(--accent-color);
+    color: white;
+    border: none;
+    padding: 15px 40px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    border-radius: 30px;
+    cursor: pointer;
+    margin-top: 20px;
+    box-shadow: 0 4px 15px rgba(46, 204, 113, 0.3);
+    transition: background 0.3s ease;
+}
+
+.submit-quiz-btn:hover {
+    background-color: #27ae60;
+}
+
+/* لضمان التجاوب مع الموبايل */
+@media (max-width: 600px) {
+    body {
+        padding: 10px;
+    }
+
+    #quiz-title {
+        font-size: 1.8rem;
+    }
+
+    .question-card {
+        padding: 15px;
+    }
+}

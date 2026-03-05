@@ -6,6 +6,6 @@ export const signToken = ({ payload = {}, signature = "secret", options = {
     return jwt.sign(payload, signature, options)
 }
 
-export const verifyTokin = ({ token = "", signature = process.env.JWT_SECRET }) => {
+export const verifyTokin = ({ token = "", signature = "secret" }) => {
     return jwt.verify(token, signature)
 }

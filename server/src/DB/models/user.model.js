@@ -4,7 +4,8 @@ const UserSchema = new Schema(
     {
         role: {
             type: String,
-            enum: ['user', 'admin']
+            enum: ['user', 'admin'],
+            default: "user"
         },
         firstName: {
             type: String,
@@ -42,10 +43,6 @@ const UserSchema = new Schema(
                     type: Number,
                     required: true,
                     min: 0
-                },
-                totalScore: {
-                    type: Number,
-                    required: true
                 },
                 date: {
                     type: Date,
