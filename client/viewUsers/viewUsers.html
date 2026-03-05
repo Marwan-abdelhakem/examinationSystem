@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - View Users</title>
+    <link rel="stylesheet" href="./viewUsers.css">
+</head>
+
+<body>
+    <div class="admin-container">
+        <header>
+            <h1>User Management</h1>
+            <button class="back-btn" onclick="window.location.href='../adminDashboard/adminDashboard.html'">Back to
+                Dashboard</button>
+        </header>
+
+        <div class="table-container">
+            <table id="users-table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>First Name</th>
+                        <th>Email</th>
+                        <th>Role</th>
+                    </tr>
+                </thead>
+                <tbody id="users-list">
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="./viewUsers.js"></script>
+</body>
+
+</html>

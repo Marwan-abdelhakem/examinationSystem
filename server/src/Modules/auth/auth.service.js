@@ -5,11 +5,16 @@ import { signToken } from "../../Utlis/token.utlis.js"
 import bcrypt from "bcrypt";
 
 // export const signUP = async (req, res, next) => {
+<<<<<<< HEAD
 //     const { firstName, lastName, password, email } = req.body
+=======
+//     const { role, firstName, lastName, password, email } = req.body
+>>>>>>> origin/master
 //     const user = await dbService.findOne({ model: UserModel, filter: { email } })
 //     if (user) {
 //         return next(new Error("Email already exists", { cause: 409 }))
 //     }
+<<<<<<< HEAD
 //     const createUser = await dbService.create({ model: UserModel, data: [{ firstName, lastName, password, email }] })
 //     return successResponse({ res, statusCode: 201, message: "User Create Successfully", data: createUser })
 // }
@@ -106,7 +111,106 @@ export const registerUser = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+=======
+//     const createUser = await dbService.create({ model: UserModel, data: [{ role, firstName, lastName, password, email }] })
+//     return successResponse({ res, statusCode: 201, message: "User Create Successfully", data: createUser })
+// }
 
+export const registerUser = async (req, res) => {
+    try {
+        const { firstName, lastName, email, password } = req.body;
 
+        // basic validation
+        // if (!name || !email || !password)
+        //   return res.status(400).json({ message: "All fields are required" });
+
+        // if (password.length < 6)
+        //   return res.status(400).json({ message: "Password must be at least 6 characters" });
+
+        // check existing email
+        const userExists = await UserModel.findOne({ email });
+        if (userExists)
+            return res.status(400).json({ message: "User already exists" });
+
+        // create user (role NOT from body)
+        const user = await UserModel.create({
+            firstName,
+            lastName,
+            email,
+            password,
+        });
+        const token = signToken({
+            payload: {
+                _id: user._id,
+                role: user.role
+            }
+        });
+
+        res.status(201).json({
+            message: "User registered successfully",
+            token,
+            user: {
+                _id: user._id,
+                firstName: user.firstName,
+                lastName: user.lastName,
+                email: user.email,
+                role: user.role
+            }
+        });
+
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
+export const login = async (req, res, next) => {
+    const { email, password } = req.body
+    const user = await dbService.findOne({ model: UserModel, filter: { email } })
+    if (!user) {
+        return next(new Error("user not Founded", { cause: 404 }))
+    }
+
+    const isPasswordMatch = password == user.password
+    if (!isPasswordMatch) {
+        return next(new Error("Invalid password", { cause: 400 }));
+    }
+
+    // 1. أضف الـ role داخل الـ payload هنا لكي يراه الميدل وير لاحقاً
+    const accessToken = signToken({
+        payload: { _id: user._id, role: user.role }, // التعديل هنا
+        options: {
+            expiresIn: "1d",
+            issuer: "Sakanly",
+            subject: "Authentication",
+        }
+    })
+
+    const refreshToken = signToken({
+        payload: { _id: user._id, role: user.role }, // التعديل هنا
+        options: {
+            expiresIn: "7d",
+            issuer: "Sakanly",
+            subject: "Authentication",
+        }
+    })
+
+    // ... إعدادات الـ cookies (تظل كما هي)
+
+    // 2. أضف الـ role في الرد لكي يراه الفرونت إند فوراً عند تسجيل الدخول
+    return successResponse({
+        res,
+        statusCode: 200,
+        message: "Login Successfully",
+        data: {
+            accessToken,
+            refreshToken,
+            role: user.role,
+            firstName: user.firstName,
+            lastName: user.lastName
+        }
+    })
+}
+
+>>>>>>> origin/master
 
 

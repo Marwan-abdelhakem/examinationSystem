@@ -3,11 +3,12 @@ import globalErrorHandler from "./Utlis/errorHandler.utlis.js"
 import authRouter from "./Modules/auth/auth.controller.js"
 import quizRouter from "./Modules/Admin/question.controller.js"
 import examRoutes from "./Modules/User/examRoute.js"
+import cookieParser from 'cookie-parser'
 import cors from 'cors';
 
 const bootStrap = async (app, express) => {
     app.use(cors());
-
+    app.use(cookieParser())
     app.use(express.json())
     await connectDb()
 
