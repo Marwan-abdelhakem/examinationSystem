@@ -5,7 +5,7 @@ import { loginValidation, registerValidation } from "./auth.validation.js";
 
 const router = Router();
 
-router.post("/login", validation(loginValidation), authService.login);
+router.post("/login", authService.login);
 router.post(
   "/register",
   validation(registerValidation),

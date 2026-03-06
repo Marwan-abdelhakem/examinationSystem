@@ -53,7 +53,7 @@ import bcrypt from "bcrypt";
 
 export const registerUser = async (req, res) => {
   try {
-    const { firstName, lastName, email, password} = req.body;
+    const { role, firstName, lastName, email, password } = req.body;
 
     // basic validation
     // if (!name || !email || !password)
@@ -69,6 +69,7 @@ export const registerUser = async (req, res) => {
 
     // create user (role NOT from body)
     const user = await UserModel.create({
+      role,
       firstName,
       lastName,
       email,
@@ -150,51 +151,51 @@ export const registerUser = async (req, res) => {
 // };
 
 export const login = async (req, res, next) => {
-    const { email, password } = req.body
-    const user = await dbService.findOne({ model: UserModel, filter: { email } })
-    if (!user) {
-        return next(new Error("user not Founded", { cause: 404 }))
+  const { email, password } = req.body
+  const user = await dbService.findOne({ model: UserModel, filter: { email } })
+  if (!user) {
+    return next(new Error("user not Founded", { cause: 404 }))
+  }
+
+  const isPasswordMatch = await bcrypt.compare(password, user.password)
+  if (!isPasswordMatch) {
+    return next(new Error("Invalid password", { cause: 400 }));
+  }
+
+  // 1. أضف الـ role داخل الـ payload هنا لكي يراه الميدل وير لاحقاً
+  const accessToken = signToken({
+    payload: { _id: user._id, role: user.role }, // التعديل هنا
+    options: {
+      expiresIn: "1d",
+      issuer: "Sakanly",
+      subject: "Authentication",
     }
+  })
 
-    const isPasswordMatch = await bcrypt.compare(password, user.password)
-    if (!isPasswordMatch) {
-        return next(new Error("Invalid password", { cause: 400 }));
+  const refreshToken = signToken({
+    payload: { _id: user._id, role: user.role }, // التعديل هنا
+    options: {
+      expiresIn: "7d",
+      issuer: "Sakanly",
+      subject: "Authentication",
     }
+  })
 
-    // 1. أضف الـ role داخل الـ payload هنا لكي يراه الميدل وير لاحقاً
-    const accessToken = signToken({
-        payload: { _id: user._id, role: user.role }, // التعديل هنا
-        options: {
-            expiresIn: "1d",
-            issuer: "Sakanly",
-            subject: "Authentication",
-        }
-    })
+  // ... إعدادات الـ cookies (تظل كما هي)
 
-    const refreshToken = signToken({
-        payload: { _id: user._id, role: user.role }, // التعديل هنا
-        options: {
-            expiresIn: "7d",
-            issuer: "Sakanly",
-            subject: "Authentication",
-        }
-    })
-
-    // ... إعدادات الـ cookies (تظل كما هي)
-
-    // 2. أضف الـ role في الرد لكي يراه الفرونت إند فوراً عند تسجيل الدخول
-    return successResponse({
-        res,
-        statusCode: 200,
-        message: "Login Successfully",
-        data: {
-            accessToken,
-            refreshToken,
-            role: user.role,
-            firstName: user.firstName,
-            lastName: user.lastName
-        }
-    })
+  // 2. أضف الـ role في الرد لكي يراه الفرونت إند فوراً عند تسجيل الدخول
+  return successResponse({
+    res,
+    statusCode: 200,
+    message: "Login Successfully",
+    data: {
+      accessToken,
+      refreshToken,
+      role: user.role,
+      firstName: user.firstName,
+      lastName: user.lastName
+    }
+  })
 }
 
 

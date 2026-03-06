@@ -4,8 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quiz</title>
+    <title>Quiz System</title>
     <link rel="stylesheet" href="./getQuiz.css">
+
 </head>
 
 <body>
@@ -19,29 +20,44 @@
             <div class="input-group">
                 <input type="text" id="quizInput" placeholder="ex: javascript or math">
                 <button class="btn-start" onclick="startExam(document.getElementById('quizInput').value)">
-                    Start the exam now. </button>
+                    Start the exam now.
+                </button>
             </div>
         </section>
 
         <section id="exam-screen" class="card" style="display: none;">
-            <div class="exam-header">
-                <h2 id="displayQuizName">Quiz name </h2>
-                <div id="timer-display" class="timer">00:00</div>
-            </div>
+            <div class="exam-wrapper">
 
-            <div class="progress-bar-container">
-                <div id="progress-fill" class="progress-fill"></div>
-            </div>
+                <aside class="sidebar">
+                    <h3 style="margin-top: 0;">Flagged</h3>
+                    <div id="flag-list">
+                        <p style="color: #888; font-size: 14px;">No flags yet.</p>
+                    </div>
+                </aside>
 
-            <div id="question-box" class="question-container">
-            </div>
+                <div class="main-exam">
+                    <div class="exam-header">
+                        <h2 id="displayQuizName">Quiz Name</h2>
+                        <div id="timer-display" class="timer">00:00</div>
+                    </div>
 
-            <div class="exam-footer">
-                <button id="prev-btn" class="btn-nav" onclick="prevQuestion()" disabled>back</button>
-                <span id="counter">question 0 from 0</span>
-                <button id="next-btn" class="btn-nav" onclick="nextQuestion()">next</button>
-                <button id="submit-btn" class="btn-submit" onclick="finishExam()" style="display: none;">Finish and
-                    submit.</button>
+                    <div class="progress-bar-container">
+                        <div id="progress-fill" class="progress-fill"></div>
+                    </div>
+
+                    <div id="question-box" class="question-container">
+                    </div>
+
+                    <div class="exam-footer">
+                        <button id="prev-btn" class="btn-nav" onclick="prevQuestion()" disabled>Back</button>
+                        <span id="counter">Question 0 of 0</span>
+                        <button id="next-btn" class="btn-nav" onclick="nextQuestion()">Next</button>
+                        <button id="submit-btn" class="btn-submit" onclick="finishExam()" style="display: none;">
+                            Finish and Submit
+                        </button>
+                    </div>
+                </div>
+
             </div>
         </section>
 
