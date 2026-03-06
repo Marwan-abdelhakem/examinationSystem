@@ -4,16 +4,6 @@ document.addEventListener("DOMContentLoaded", () => {
   loadPreviousExams();
 });
 
-//Show Username
-// function loadUserName() {
-//   const user = JSON.parse(localStorage.getItem("user"));
-
-//   if (user && user.firstName) {
-//     document.getElementById(
-//       "username"
-//     ).innerText = `Welcome ${user.firstName}`;
-//   }
-// }
 
 function loadUserName() {
   const user = JSON.parse(localStorage.getItem("user"));
@@ -27,7 +17,12 @@ function loadUserName() {
 // Fetch All Quizzes
 async function loadQuizzes() {
   try {
-    const token = localStorage.getItem("token");
+const token = localStorage.getItem("token");
+
+if (!token) {
+  window.location.href = "login.html";
+  return;
+}
 
     const response = await fetch("http://localhost:3000/api/quiz/getallquiz", {
       method: "GET",
@@ -45,7 +40,8 @@ async function loadQuizzes() {
     // console.log("Response status:", response.status);
     // console.log("Data:", result);
 
-    renderQuizzes(result.data);
+    // renderQuizzes(result.data);
+    renderQuizzes(result.data.quizs || []);
   } catch (error) {
     console.error(error);
   }
@@ -71,7 +67,7 @@ function renderQuizzes(quizzes) {
         
 
         <div class = "exam-title"> ${quiz.quizName}</div>
-        <p>Duration: ${quiz.duration || 0} min </p>
+        <p>Duration: ${quiz.durationInMinutes || 0} min </p>
         <button class= "start-btn"
          onclick="startExam('${quiz.quizName}')">
          Start Exam
@@ -101,7 +97,7 @@ async function startExam(quizName) {
 
     const result = await response.json();
     console.log("Exam Start ", result);
-    window.location.href = `../client/getQuiz/getQuiz.html?quiz=${encodeURIComponent(quizName)}`;
+    window.location.href = `../../client/getQuiz/getQuiz.html?quiz=${encodeURIComponent(quizName)}`;
   } catch (error) {
     console.error(error);
   }
@@ -114,7 +110,7 @@ async function loadPreviousExams() {
     const token = localStorage.getItem("token");
 
     const response = await fetch(
-      "http://localhost:3000/api/exam/previousexams",
+      "http://localhost:3000/api/quiz/getMyGrades",
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -124,13 +120,35 @@ async function loadPreviousExams() {
 
     const result = await response.json();
 
-    renderPreviousExams(result.data);
+    // renderPreviousExams(result.data);
+renderPreviousExams(result.grades || []);
   } catch (error) {
     console.error(error);
   }
 }
 
 // Render Previous Exams
+// function renderPreviousExams(exams) {
+//   const container = document.getElementById("previousExams");
+
+//   container.innerHTML = "";
+
+//   if (!exams || exams.length === 0) {
+//     container.innerHTML = "<p>No previous exam results yet</p>";
+//     return;
+//   }
+
+//   exams.forEach((exam) => {
+//     container.innerHTML += `
+//       <div class="prev-item">
+//         <p>${exam.examName}</p>
+//         <p>Score: ${exam.score}</p>
+//         <small>${new Date(exam.date).toLocaleDateString()}</small>
+//       </div>
+//     `;
+//   });
+// }
+
 function renderPreviousExams(exams) {
   const container = document.getElementById("previousExams");
 
@@ -144,8 +162,8 @@ function renderPreviousExams(exams) {
   exams.forEach((exam) => {
     container.innerHTML += `
       <div class="prev-item">
-        <p>${exam.examName}</p>
-        <p>Score: ${exam.score} / ${exam.totalScore}</p>
+        <p>${exam.examName || "Unknown Exam"}</p>
+        <p>Score: ${exam.score}</p>
         <small>${new Date(exam.date).toLocaleDateString()}</small>
       </div>
     `;
