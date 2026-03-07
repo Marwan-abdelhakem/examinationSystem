@@ -109,11 +109,9 @@ input[type="text"]:focus {
 
 .question-container {
     text-align: left;
-    /* غيرناها من right لـ left */
     margin-bottom: 40px;
     flex-grow: 1;
     width: 100%;
-    /* تأكد إنها مالية العرض */
 }
 
 .question-text {
@@ -180,7 +178,7 @@ input[type="text"]:focus {
 }
 
 .btn-nav {
-    background: #95a5a6;
+    background: var(--primary-color);
     color: white;
 }
 

@@ -9,12 +9,11 @@ body {
     background-color: #f4f7f6;
 }
 
-/* Navbar Styling */
 .navbar {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #2c3e50;
+    background-color: #4a90e2;
     color: white;
     padding: 15px 30px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
@@ -35,7 +34,6 @@ body {
     cursor: pointer;
 }
 
-/* Dashboard Layout */
 .dashboard-container {
     padding: 40px;
     max-width: 1200px;

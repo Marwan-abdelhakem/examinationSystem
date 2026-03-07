@@ -65,7 +65,7 @@ function renderQuestion() {
   renderFlagList();
 }
 
-// --- منطق الـ Flag والقائمة الجانبية ---
+// ---   Flag القائمة الجانبية ---
 function toggleFlag(index) {
   if (flaggedQuestions.has(index)) {
     flaggedQuestions.delete(index);

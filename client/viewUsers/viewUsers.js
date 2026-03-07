@@ -16,7 +16,7 @@ async function fetchAllUsers() {
         const result = await response.json();
 
         if (response.ok) {
-            const users = result.data.users; // تأكد أن المسار يطابق رد الـ API الخاص بك
+            const users = result.data.users;
 
             if (users.length === 0) {
                 tbody.innerHTML = "<tr><td colspan='5'>No users found.</td></tr>";
